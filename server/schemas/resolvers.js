@@ -25,16 +25,16 @@ const resolvers = {
         },
         me: async (parent, args, context) => {
             if (context.user) {
-                const userData = await User.findOne({ _id: context.user._id })
+              const userData = await User.findOne({ _id: context.user._id })
                 .select('-__v -password')
                 .populate('thoughts')
                 .populate('friends');
-
-                return userData;
+      
+              return userData;
             }
-
+      
             throw new AuthenticationError('Not logged in');
-        }
+          },
     },
     Mutation: {
         addUser: async (parent, args) => {
@@ -45,21 +45,20 @@ const resolvers = {
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-
+      
             if (!user) {
-                throw new AuthenticationError('Incorrect credentials');
+              throw new AuthenticationError('Incorrect credentials');
             }
-
+      
             const correctPw = await user.isCorrectPassword(password);
-
-            if(!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
+      
+            if (!correctPw) {
+              throw new AuthenticationError('Incorrect credentials');
             }
-
+      
             const token = signToken(user);
-
             return { token, user };
-        },
+          },
         addThought: async (parent, args, context) => {
                 if(context.user) {
                     const thought = await Thought.create({ ...args, username: context.user.username });
