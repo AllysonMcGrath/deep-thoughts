@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 //create link to GraphQl server at endpoint
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: '/graphql',
 });
 //instantiate apollo client instance and create connection to api endpoint
 //instantiate new cache object
